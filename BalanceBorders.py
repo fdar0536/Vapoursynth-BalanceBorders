@@ -2,7 +2,11 @@ import vapoursynth as vs
 import math
 
 #BalanceBorders
+#Original script: https://github.com/Neroldy/AviSynth_Filters/blob/master/BalanceBorders.avsi
 #by PL — [2009.09.25] v0.2
+#Ported by fdar0536 2017.08.17
+
+#Dependency: VapourSynth R38 or later.
 
 def BalanceBorders(c, cTop, cBottom, cLeft, cRight, thresh=128, blur=999):
     funcname = "BalanceBorders"
