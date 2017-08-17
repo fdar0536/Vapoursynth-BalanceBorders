@@ -24,7 +24,7 @@ def BalanceBorders(c, cTop, cBottom, cLeft, cRight, thresh=128, blur=999):
         raise ValueError(funcname+': \"thresh\" must between 0 and 128.')
     
     if blur < 0:
-        raise ValueError(funcname+'\"blur\" must greater than 0.')
+        raise ValueError(funcname+': \"blur\" must greater than 0.')
     
     del funcname
     core = vs.get_core()
