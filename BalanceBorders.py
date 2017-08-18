@@ -56,8 +56,8 @@ def BalanceBorders(c, cTop, cBottom, cLeft, cRight, thresh=128, blur=999):
         Difference = core.std.MakeDiff(Balanced, Original, planes=[0, 1, 2])
         del Balanced
 
-        Tp = (128 + thresh) * ((1 << c.format.bits_per_sample) - 1) // 255
-        Tm = (128 - thresh) * ((1 << c.format.bits_per_sample) - 1) // 255
+        Tp = (128 + thresh) * ((1 << c.format.bits_per_sample) - 1) * 0.004 # 1 / 255 = 0.004
+        Tm = (128 - thresh) * ((1 << c.format.bits_per_sample) - 1) * 0.004
 
         expr = 'x {0} > {0} x ?'.format(Tp)
         Difference = core.std.Expr(clips=Difference, expr=[expr, expr, expr])
