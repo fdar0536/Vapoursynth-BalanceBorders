@@ -35,19 +35,19 @@ def BalanceBorders(c, cTop, cBottom, cLeft, cRight, thresh=128, blur=999):
         cTop = min(cTop, cHeight-1)
         BlurWidth = max(4, math.floor(cWidth / blur))
 
-        C2 = core.resize.Point(c, cWidth*2, cHeight*2)
+        C2 = core.resize.Point(c, cWidth<<1, cHeight<<1)
 
-        C3 = core.std.CropRel(C2, 0, 0, cTop*2, (cHeight-cTop-1)*2) #(cHeight * 2 - cTop * 2) - 2
-        C3 = core.resize.Point(C3, cWidth*2, cTop*2)
-        C3 = core.resize.Bilinear(C3, BlurWidth*2, cTop*2)
+        C3 = core.std.CropRel(C2, 0, 0, cTop<<1, (cHeight-cTop-1)<<1) #(cHeight * 2 - cTop * 2) - 2
+        C3 = core.resize.Point(C3, cWidth<<1, cTop<<1)
+        C3 = core.resize.Bilinear(C3, BlurWidth<<1, cTop<<1)
         C3 = core.std.Convolution(C3, matrix=[0, 0, 0, 1, 1, 1, 0, 0, 0], planes=[0, 1, 2])
-        ReferenceBlur = core.resize.Bilinear(C3, cWidth*2, cTop*2)
+        ReferenceBlur = core.resize.Bilinear(C3, cWidth<<1, cTop<<1)
         
-        Original = core.std.CropRel(C2, 0, 0, 0, (cHeight-cTop)*2) #cHeight * 2 - 0 - cTop * 2
+        Original = core.std.CropRel(C2, 0, 0, 0, (cHeight-cTop)<<1) #cHeight * 2 - 0 - cTop * 2
 
-        C3 = core.resize.Bilinear(Original, BlurWidth*2, cTop*2)
+        C3 = core.resize.Bilinear(Original, BlurWidth<<1, cTop<<1)
         C3 = core.std.Convolution(C3, matrix=[0, 0, 0, 1, 1, 1, 0, 0, 0], planes=[0, 1, 2])
-        OriginalBlur = core.resize.Bilinear(C3, cWidth*2, cTop*2)
+        OriginalBlur = core.resize.Bilinear(C3, cWidth<<1, cTop<<1)
         del C3
 
         Balanced = core.std.Expr(clips=[Original, OriginalBlur, ReferenceBlur], expr=["z y - x +", "z y - x +", "z y - x +"])
